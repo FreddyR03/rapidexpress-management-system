@@ -48,6 +48,7 @@ public class MenuAdministradorCLI {
             System.out.println("5. Gestión de Rutas");
             System.out.println("6. Gestión de Mantenimientos");
             System.out.println("7. Auditoría");
+            System.out.println("8. Simular costo de envios");
             System.out.println("0. Salir");
             opcion = CLIUtils.leerInt("Seleccione una opción");
 
@@ -59,6 +60,7 @@ public class MenuAdministradorCLI {
                 case 5 -> menuRutas();
                 case 6 -> menuMantenimientos();
                 case 7 -> menuAuditoria();
+                case 8 -> SimuladorCli.simular();
             }
 
         } while (opcion != 0);
