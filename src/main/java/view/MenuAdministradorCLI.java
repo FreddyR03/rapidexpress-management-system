@@ -13,7 +13,12 @@ import model.Ruta;
 import util.CLIUtils;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import model.Paquete;
 import service.ejercicio2.ServicioClientes;
+import view.ejercicio3.CrearRutasCli;
 
 public class MenuAdministradorCLI {
 
@@ -24,6 +29,7 @@ public class MenuAdministradorCLI {
     private RutaController rutaController;
     private MantenimientoController mantenimientoController;
     private AuditoriaController auditoriaController;
+    private CrearRutasCli crearRutasCli;
 
     private Usuario usuarioActual;
 
@@ -173,7 +179,9 @@ public class MenuAdministradorCLI {
                     String contacto = CLIUtils.leerString("Contacto");
                     String estadoStr = CLIUtils.leerString("Estado (ACTIVO, DE_VACACIONES, INACTIVO)").toUpperCase();
                     EstadoConductor estado = EstadoConductor.valueOf(estadoStr);
-                    conductorController.crearConductor(nombre, identificacion, tipoLicencia, contacto, estado);
+                    String fechaStr = CLIUtils.leerString("Fecha de vencimiento (YYYY-MM-DD)");
+                    LocalDate fechaVencimiento = LocalDate.parse(fechaStr);
+                    conductorController.crearConductor(nombre, identificacion, tipoLicencia, contacto, estado, fechaVencimiento);
                     auditoriaController.registrarAccion(usuarioActual.getUsername(), "CREAR_CONDUCTOR", "Identificación: " + identificacion);
                 }
                 case 2 -> conductorController.listarConductores();
@@ -186,7 +194,9 @@ public class MenuAdministradorCLI {
                     String contacto = CLIUtils.leerString("Nuevo contacto");
                     String estadoStr = CLIUtils.leerString("Nuevo estado (ACTIVO, DE_VACACIONES, INACTIVO)").toUpperCase();
                     EstadoConductor estado = EstadoConductor.valueOf(estadoStr);
-                    conductorController.actualizarConductor(new Conductor(id, nombre, identificacion, tipoLicencia, contacto, estado));
+                    String fechaStr = CLIUtils.leerString("Nueva fecha vencimiento licencia (YYYY-MM-DD)");
+                    LocalDate fechaVencimiento = LocalDate.parse(fechaStr);
+                    conductorController.actualizarConductor(new Conductor(id, nombre, identificacion, tipoLicencia, contacto, estado, fechaVencimiento));
                     auditoriaController.registrarAccion(usuarioActual.getUsername(), "ACTUALIZAR_CONDUCTOR", "ID: " + id);
                 }
             }
@@ -228,16 +238,19 @@ public class MenuAdministradorCLI {
 
     private void menuRutas() {
         int opcion;
+        // EJERCICIO 3 crear ruta
         do {
             System.out.println("\n--- Gestión de Rutas ---");
-            System.out.println("1. Iniciar Ruta");
-            System.out.println("2. Finalizar Ruta");
-            System.out.println("3. Listar Rutas");
+            System.out.println("1. Crear Ruta");
+            System.out.println("2. Iniciar Ruta");
+            System.out.println("3. Finalizar Ruta");
+            System.out.println("4. Listar Rutas");
             System.out.println("0. Volver");
             opcion = CLIUtils.leerInt("Seleccione una opción");
 
             switch (opcion) {
-                case 1 -> {
+                case 1 -> crearRutasCli.crearRutaCLI();
+                case 2 -> {
                     int id = CLIUtils.leerInt("ID de la ruta a iniciar");
                     Ruta r = rutaController.obtenerRutaPorId(id);
                     if (r != null) {
@@ -245,7 +258,7 @@ public class MenuAdministradorCLI {
                         auditoriaController.registrarAccion(usuarioActual.getUsername(), "INICIAR_RUTA", "ID: " + id);
                     }
                 }
-                case 2 -> {
+                case 3 -> {
                     int id = CLIUtils.leerInt("ID de la ruta a finalizar");
                     Ruta r = rutaController.obtenerRutaPorId(id);
                     if (r != null) {
@@ -253,7 +266,7 @@ public class MenuAdministradorCLI {
                         auditoriaController.registrarAccion(usuarioActual.getUsername(), "FINALIZAR_RUTA", "ID: " + id);
                     }
                 }
-                case 3 -> rutaController.listarRutas();
+                case 4 -> rutaController.listarRutas();
             }
         } while (opcion != 0);
     }

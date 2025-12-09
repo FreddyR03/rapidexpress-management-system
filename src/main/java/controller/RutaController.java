@@ -13,10 +13,15 @@ public class RutaController {
         this.rutaService = new ServicioRuta();
     }
 
-    public void crearRuta(Ruta ruta) {
+    public void crearRuta(int idConductor, Ruta ruta) {
         try {
-            rutaService.crearRuta(ruta);
-            System.out.println("Ruta creada: " + ruta);
+            boolean resultadoCreacion = rutaService.crearRuta(idConductor, ruta);
+        
+            if (resultadoCreacion) {
+                System.out.println("Ruta creada exitosamente");
+            } else {
+                System.out.println("Ruta rechazada exitosamente");
+            }
         } catch (Exception e) {
             System.err.println("Error al crear ruta: " + e.getMessage());
         }

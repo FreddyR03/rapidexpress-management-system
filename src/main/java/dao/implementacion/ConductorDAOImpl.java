@@ -5,6 +5,7 @@ import model.Conductor;
 import model.enums.EstadoConductor;
 import config.ConexionBD;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,7 +17,7 @@ public class ConductorDAOImpl implements ConductorDAO {
 
     @Override
     public void crearConductor(Conductor conductor) throws Exception {
-        String sql = "INSERT INTO conductores (nombre_completo, identificacion, tipo_licencia, numero_contacto, estado) VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO conductores (nombre_completo, identificacion, tipo_licencia, numero_contacto, estado, fecha_vencimiento_licencia) VALUES (?,?,?,?,?,?)";
         try (Connection conn = ConexionBD.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, conductor.getNombreCompleto());
@@ -24,6 +25,7 @@ public class ConductorDAOImpl implements ConductorDAO {
             ps.setString(3, conductor.getTipoLicencia());
             ps.setString(4, conductor.getNumeroContacto());
             ps.setString(5, conductor.getEstado().name());
+            ps.setDate(6, Date.valueOf(conductor.getFechaVecimientoLicencia()));
             ps.executeUpdate();
 
             try (ResultSet rs = ps.getGeneratedKeys()) {
@@ -36,7 +38,7 @@ public class ConductorDAOImpl implements ConductorDAO {
 
     @Override
     public void actualizarConductor(Conductor conductor) throws Exception {
-        String sql = "UPDATE conductores SET nombre_completo=?, identificacion=?, tipo_licencia=?, numero_contacto=?, estado=? WHERE id_conductor=?";
+        String sql = "UPDATE conductores SET nombre_completo=?, identificacion=?, tipo_licencia=?, numero_contacto=?, estado=?, fecha_vencimiento_licencia=? WHERE id_conductor=?";
         try (Connection conn = ConexionBD.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, conductor.getNombreCompleto());
@@ -44,7 +46,8 @@ public class ConductorDAOImpl implements ConductorDAO {
             ps.setString(3, conductor.getTipoLicencia());
             ps.setString(4, conductor.getNumeroContacto());
             ps.setString(5, conductor.getEstado().name());
-            ps.setInt(6, conductor.getIdConductor());
+            ps.setDate(6, Date.valueOf(conductor.getFechaVecimientoLicencia()));
+            ps.setInt(7, conductor.getIdConductor());
             ps.executeUpdate();
         }
     }
@@ -110,7 +113,8 @@ public class ConductorDAOImpl implements ConductorDAO {
                 rs.getString("identificacion"),
                 rs.getString("tipo_licencia"),
                 rs.getString("numero_contacto"),
-                EstadoConductor.valueOf(rs.getString("estado"))
+                EstadoConductor.valueOf(rs.getString("estado")),
+                rs.getDate("fecha_vencimiento_licencia").toLocalDate()
         );
     }
 }

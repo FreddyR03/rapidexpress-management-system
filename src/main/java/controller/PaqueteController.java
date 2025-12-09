@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.ArrayList;
 import model.Paquete;
 import model.enums.EstadoPaquete;
 import service.ServicioPaquete;
@@ -34,12 +35,23 @@ public class PaqueteController {
         }
     }
 
-    public void listarPaquetesPorEstado(EstadoPaquete estado) {
+    public List<Paquete> listarPaquetesPorEstado(EstadoPaquete estado) {
         try {
             List<Paquete> paquetes = paqueteService.listarPaquetesPorEstado(estado);
             paquetes.forEach(System.out::println);
+            return paquetes;
         } catch (Exception e) {
             System.err.println("Error al listar paquetes por estado: " + e.getMessage());
+            return new ArrayList<>();
+        }
+    }
+    
+    public Paquete obtenerPaquetePorId(int id) {
+        try {
+            return paqueteService.obtenerPaquetePorId(id);
+        } catch (Exception e) {
+            System.err.println("Error al obtener paquete por ID: " + e.getMessage());
+            return null; 
         }
     }
 

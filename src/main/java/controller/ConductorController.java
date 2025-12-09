@@ -1,5 +1,6 @@
 package controller;
 
+import java.time.LocalDate;
 import model.Conductor;
 import model.enums.EstadoConductor;
 import service.ServicioConductor;
@@ -14,9 +15,9 @@ public class ConductorController {
         this.conductorService = new ServicioConductor();
     }
 
-    public void crearConductor(String nombre, String identificacion, String tipoLicencia, String contacto, EstadoConductor estado) {
+    public void crearConductor(String nombre, String identificacion, String tipoLicencia, String contacto, EstadoConductor estado, LocalDate fecha_vencimiento_licencia) {
         try {
-            Conductor conductor = new Conductor(0, nombre, identificacion, tipoLicencia, contacto, estado);
+            Conductor conductor = new Conductor(0, nombre, identificacion, tipoLicencia, contacto, estado, fecha_vencimiento_licencia);
             conductorService.crearConductor(conductor);
             System.out.println("Conductor creado: " + conductor);
         } catch (Exception e) {

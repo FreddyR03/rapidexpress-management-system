@@ -4,9 +4,9 @@ import controller.*;
 import model.*;
 import model.enums.*;
 import util.CLIUtils;
+import view.ejercicio3.CrearRutasCli;
 
-import java.time.LocalDate;
-import java.util.List;
+
 
 public class MenuTrabajadorCLI {
 
@@ -16,6 +16,7 @@ public class MenuTrabajadorCLI {
     private PaqueteController paqueteController;
     private RutaController rutaController;
     private AuditoriaController auditoriaController;
+    private CrearRutasCli crearRutasCli;
 
     public MenuTrabajadorCLI(Usuario usuario) {
         this.usuarioActual = usuario;
@@ -82,17 +83,20 @@ public class MenuTrabajadorCLI {
     }
 
     private void menuRutas() {
-        int opcion = -1;
+        int opcion;
+        // EJERCICIO 3 crear ruta
         do {
             System.out.println("\n--- Gestión de Rutas ---");
-            System.out.println("1. Iniciar Ruta");
-            System.out.println("2. Finalizar Ruta");
-            System.out.println("3. Listar Rutas");
+            System.out.println("1. Crear Ruta");
+            System.out.println("2. Iniciar Ruta");
+            System.out.println("3. Finalizar Ruta");
+            System.out.println("4. Listar Rutas");
             System.out.println("0. Volver");
             opcion = CLIUtils.leerInt("Seleccione una opción");
 
             switch (opcion) {
-                case 1 -> {
+                case 1 -> crearRutasCli.crearRutaCLI();
+                case 2 -> {
                     int id = CLIUtils.leerInt("ID de la ruta a iniciar");
                     Ruta r = rutaController.obtenerRutaPorId(id);
                     if (r != null) {
@@ -100,7 +104,7 @@ public class MenuTrabajadorCLI {
                         auditoriaController.registrarAccion(usuarioActual.getUsername(), "INICIAR_RUTA", "ID: " + id);
                     }
                 }
-                case 2 -> {
+                case 3 -> {
                     int id = CLIUtils.leerInt("ID de la ruta a finalizar");
                     Ruta r = rutaController.obtenerRutaPorId(id);
                     if (r != null) {
@@ -108,7 +112,7 @@ public class MenuTrabajadorCLI {
                         auditoriaController.registrarAccion(usuarioActual.getUsername(), "FINALIZAR_RUTA", "ID: " + id);
                     }
                 }
-                case 3 -> rutaController.listarRutas();
+                case 4 -> rutaController.listarRutas();
             }
         } while (opcion != 0);
     }
