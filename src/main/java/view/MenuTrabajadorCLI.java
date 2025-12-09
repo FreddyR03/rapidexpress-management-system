@@ -1,6 +1,7 @@
 package view;
 
 import controller.*;
+import java.time.LocalDate;
 import model.*;
 import model.enums.*;
 import util.CLIUtils;
@@ -56,6 +57,7 @@ public class MenuTrabajadorCLI {
             System.out.println("1. Crear Paquete");
             System.out.println("2. Listar Paquetes");
             System.out.println("3. Listar Paquetes por Estado");
+            System.out.println("4. Listar Paquetes Olvidados");
             System.out.println("0. Volver");
             opcion = CLIUtils.leerInt("Seleccione una opción");
 
@@ -69,7 +71,10 @@ public class MenuTrabajadorCLI {
                     String remitente = CLIUtils.leerString("Remitente");
                     String destinatario = CLIUtils.leerString("Destinatario");
                     String tracking = CLIUtils.generarTrackingCode();
-                    paqueteController.crearPaquete(tracking, descripcion, peso, dimensiones, origen, destino, remitente, destinatario, EstadoPaquete.EN_BODEGA);
+                    
+                    LocalDate fechaIngreso = LocalDate.now();
+                    
+                    paqueteController.crearPaquete(tracking, descripcion, peso, dimensiones, origen, destino, remitente, destinatario, EstadoPaquete.EN_BODEGA, fechaIngreso);
                     auditoriaController.registrarAccion(usuarioActual.getUsername(), "CREAR_PAQUETE", "Tracking: " + tracking);
                 }
                 case 2 -> paqueteController.listarPaquetes();
@@ -78,6 +83,7 @@ public class MenuTrabajadorCLI {
                     EstadoPaquete estado = EstadoPaquete.valueOf(estadoStr);
                     paqueteController.listarPaquetesPorEstado(estado);
                 }
+                case 4 -> paqueteController.listarPaquetesOlvidados();
             }
         } while (opcion != 0);
     }

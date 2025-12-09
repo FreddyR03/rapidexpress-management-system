@@ -1,5 +1,6 @@
 package model;
 
+import java.time.LocalDate;
 import model.enums.EstadoPaquete;
 
 public class Paquete {
@@ -13,9 +14,11 @@ public class Paquete {
     private String remitente;
     private String destinatario;
     private EstadoPaquete estado;
+    private LocalDate fechaIngreso;
 
     public Paquete(int idPaquete, String trackingCode, String descripcion, double peso, String dimensiones,
-                   String direccionOrigen, String direccionDestino, String remitente, String destinatario, EstadoPaquete estado) {
+                   String direccionOrigen, String direccionDestino, String remitente, String destinatario, EstadoPaquete estado,
+                   LocalDate fechaIngreso) {
         this.idPaquete = idPaquete;
         this.trackingCode = trackingCode;
         this.descripcion = descripcion;
@@ -26,11 +29,13 @@ public class Paquete {
         this.remitente = remitente;
         this.destinatario = destinatario;
         this.estado = estado;
+        this.fechaIngreso = fechaIngreso;
     }
 
     // Constructor sin ID para creación desde menú
     public Paquete(String trackingCode, String descripcion, double peso, String dimensiones,
-                   String direccionOrigen, String direccionDestino, String remitente, String destinatario, EstadoPaquete estado) {
+                   String direccionOrigen, String direccionDestino, String remitente, String destinatario, EstadoPaquete estado,
+                   LocalDate fechaIngreso) {
         this.trackingCode = trackingCode;
         this.descripcion = descripcion;
         this.peso = peso;
@@ -40,6 +45,7 @@ public class Paquete {
         this.remitente = remitente;
         this.destinatario = destinatario;
         this.estado = estado;
+        this.fechaIngreso = fechaIngreso;
     }
 
     public int getIdPaquete() { return idPaquete; }
@@ -52,6 +58,7 @@ public class Paquete {
     public String getRemitente() { return remitente; }
     public String getDestinatario() { return destinatario; }
     public EstadoPaquete getEstado() { return estado; }
+    public LocalDate getFechaIngreso(){ return fechaIngreso; }
 
     public void setIdPaquete(int idPaquete) { this.idPaquete = idPaquete; }
     public void setTrackingCode(String trackingCode) { this.trackingCode = trackingCode; }
@@ -63,6 +70,7 @@ public class Paquete {
     public void setRemitente(String remitente) { this.remitente = remitente; }
     public void setDestinatario(String destinatario) { this.destinatario = destinatario; }
     public void setEstado(EstadoPaquete estado) { this.estado = estado; }
+    public void setFechaIngreso(LocalDate fechaIngreso) {this.fechaIngreso = fechaIngreso; }
 
     @Override
     public String toString() {
@@ -77,6 +85,7 @@ public class Paquete {
                 ", remitente='" + remitente + '\'' +
                 ", destinatario='" + destinatario + '\'' +
                 ", estado=" + estado +
+                ", fecha ingreso " + fechaIngreso +
                 '}';
     }
 }

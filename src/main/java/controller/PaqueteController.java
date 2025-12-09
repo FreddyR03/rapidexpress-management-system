@@ -1,5 +1,6 @@
 package controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import model.Paquete;
 import model.enums.EstadoPaquete;
@@ -16,9 +17,9 @@ public class PaqueteController {
     }
 
     public void crearPaquete(String trackingCode, String descripcion, double peso, String dimensiones,
-                             String origen, String destino, String remitente, String destinatario, EstadoPaquete estado) {
+                             String origen, String destino, String remitente, String destinatario, EstadoPaquete estado, LocalDate fechaIngreso) {
         try {
-            Paquete paquete = new Paquete(0, trackingCode, descripcion, peso, dimensiones, origen, destino, remitente, destinatario, estado);
+            Paquete paquete = new Paquete(0,trackingCode, descripcion, peso, dimensiones, origen, destino, remitente, destinatario, estado, fechaIngreso);
             paqueteService.crearPaquete(paquete);
             System.out.println("Paquete creado: " + paquete);
         } catch (Exception e) {
@@ -42,6 +43,17 @@ public class PaqueteController {
             return paquetes;
         } catch (Exception e) {
             System.err.println("Error al listar paquetes por estado: " + e.getMessage());
+            return new ArrayList<>();
+        }
+    }
+    
+    public List<Paquete> listarPaquetesOlvidados() {
+        try {
+            List<Paquete> paquetesOlvidados = paqueteService.ListarPaquetesOlvidados();
+            paquetesOlvidados.forEach(System.out::println);
+            return paquetesOlvidados;
+        } catch (Exception e) {
+            System.err.println("Error al listar paquetes Olvidados: " + e.getMessage());
             return new ArrayList<>();
         }
     }

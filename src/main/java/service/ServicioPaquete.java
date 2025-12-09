@@ -37,6 +37,12 @@ public class ServicioPaquete {
     public List<Paquete> listarPaquetes() throws Exception {
         return paqueteDAO.obtenerTodosPaquetes();
     }
+    
+    // EJERCICIO 4
+    
+    public List<Paquete> ListarPaquetesOlvidados(){
+        return paqueteDAO.listarPaquetesOlvidados();
+    }
 
     public List<Paquete> listarPaquetesPorEstado(EstadoPaquete estado) throws Exception {
         return paqueteDAO.obtenerPaquetesPorEstado(estado.name());

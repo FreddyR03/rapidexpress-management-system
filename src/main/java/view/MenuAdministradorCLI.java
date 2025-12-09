@@ -210,6 +210,8 @@ public class MenuAdministradorCLI {
             System.out.println("1. Crear Paquete");
             System.out.println("2. Listar Paquetes");
             System.out.println("3. Listar por Estado");
+            // EJERCICIO 4
+            System.out.println("4. Listar paquetes olvidados");
             System.out.println("0. Volver");
             opcion = CLIUtils.leerInt("Seleccione una opción");
 
@@ -222,8 +224,9 @@ public class MenuAdministradorCLI {
                     String destino = CLIUtils.leerString("Dirección destino");
                     String remitente = CLIUtils.leerString("Remitente");
                     String destinatario = CLIUtils.leerString("Destinatario");
-                    String tracking = CLIUtils.generarTrackingCode();
-                    paqueteController.crearPaquete(tracking, descripcion, peso, dimensiones, origen, destino, remitente, destinatario, EstadoPaquete.EN_BODEGA);
+                    String tracking = CLIUtils.generarTrackingCode();LocalDate fechaIngreso = LocalDate.now();
+                    
+                    paqueteController.crearPaquete(tracking, descripcion, peso, dimensiones, origen, destino, remitente, destinatario, EstadoPaquete.EN_BODEGA, fechaIngreso);
                     auditoriaController.registrarAccion(usuarioActual.getUsername(), "CREAR_PAQUETE", "Tracking: " + tracking);
                 }
                 case 2 -> paqueteController.listarPaquetes();
@@ -232,6 +235,7 @@ public class MenuAdministradorCLI {
                     EstadoPaquete estado = EstadoPaquete.valueOf(estadoStr);
                     paqueteController.listarPaquetesPorEstado(estado);
                 }
+                case 4 -> paqueteController.listarPaquetesOlvidados();
             }
         } while (opcion != 0);
     }
