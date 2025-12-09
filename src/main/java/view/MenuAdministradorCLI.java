@@ -13,6 +13,7 @@ import model.Ruta;
 import util.CLIUtils;
 
 import java.time.LocalDate;
+import service.ejercicio2.ServicioClientes;
 
 public class MenuAdministradorCLI {
 
@@ -37,6 +38,7 @@ public class MenuAdministradorCLI {
         this.auditoriaController = new AuditoriaController();
     }
 
+    @SuppressWarnings("empty-statement")
     public void iniciar() {
         int opcion = -1;
         do {
@@ -49,6 +51,7 @@ public class MenuAdministradorCLI {
             System.out.println("6. Gestión de Mantenimientos");
             System.out.println("7. Auditoría");
             System.out.println("8. Simular costo de envios");
+            System.out.println("9. Importar clientes con CSV");
             System.out.println("0. Salir");
             opcion = CLIUtils.leerInt("Seleccione una opción");
 
@@ -61,8 +64,12 @@ public class MenuAdministradorCLI {
                 case 6 -> menuMantenimientos();
                 case 7 -> menuAuditoria();
                 case 8 -> SimuladorCli.simular();
+                case 9 -> {
+                    ServicioClientes importar = new ServicioClientes();
+                    importar.crearArchivo();
+                    importar.importarClientesDesdeCSV();
+                }
             }
-
         } while (opcion != 0);
     }
 
