@@ -722,3 +722,177 @@ public class AuditoriaController {
     }
 }
 ```
+
+
+
+## 🚀 Extensión: Notificación de Eventos de Paquetes (Patrón Observer)
+
+Implementaremos un sistema para que, cuando el estado de un paquete cambie (el **Sujeto**), el sistema de Auditoría (el **Observador**) sea notificado de manera desacoplada.
+
+### 1\. ⚙️ Crear la Interfaz del Observador y el Sujeto
+
+Definiremos interfaces genéricas para el patrón.
+
+#### A. `Observer.java`
+
+```java
+// Archivo: util/observer/Observer.java
+public interface Observer {
+    void update(Object eventData);
+}
+```
+
+#### B. `Subject.java`
+
+```java
+// Archivo: util/observer/Subject.java
+public interface Subject {
+    void attach(Observer o);
+    void detach(Observer o);
+    void notifyObservers(Object eventData);
+}
+```
+
+-----
+
+### 2\. 📦 Implementar el Sujeto (Observable)
+
+La clase que maneja los eventos de cambio de estado de los paquetes será el Sujeto. Dado que el cambio se realiza en el `PaqueteService`, haremos que este actúe como el emisor de eventos.
+
+#### `PaqueteService.java` (Implementando `Subject`)
+
+```java
+// Archivo: service/PaqueteService.java
+import util.observer.Observer;
+import util.observer.Subject;
+import java.util.ArrayList;
+import java.util.List;
+
+public class PaqueteService implements Subject {
+    
+    // Lista de observadores que reaccionarán a los cambios de paquete
+    private List<Observer> observers = new ArrayList<>();
+    
+    // ... (Atributos y Constructor) ...
+
+    // MÉTODOS DEL SUJETO (Subject)
+    @Override
+    public void attach(Observer o) {
+        observers.add(o);
+    }
+
+    @Override
+    public void detach(Observer o) {
+        observers.remove(o);
+    }
+
+    @Override
+    public void notifyObservers(Object eventData) {
+        for (Observer observer : observers) {
+            observer.update(eventData);
+        }
+    }
+    
+    // MÉTODO DE NEGOCIO MODIFICADO
+    @Override
+    public void actualizarPaquete(Paquete paquete) throws Exception {
+        // 1. Obtener el estado ANTERIOR
+        Paquete paqueteAnterior = paqueteDAO.obtenerPaquetePorId(paquete.getIdPaquete());
+        EstadoPaquete estadoAnterior = paqueteAnterior.getEstado();
+
+        // 2. Ejecutar la actualización en la base de datos (DAO)
+        paqueteDAO.actualizarPaquete(paquete);
+
+        // 3. Obtener el estado NUEVO
+        EstadoPaquete estadoNuevo = paquete.getEstado();
+
+        // 4. CLAVE: Llama al logger (tu implementación original)
+        if (!estadoNuevo.equals(estadoAnterior)) {
+            // 5. CLAVE: Notificar a los observadores sobre el evento de cambio
+            // Enviamos un mapa o un objeto simple con la data relevante
+            String evento = "PAQUETE_ESTADO_CAMBIADO:" + paquete.getIdPaquete() + ":" + estadoAnterior.name() + "->" + estadoNuevo.name();
+            notifyObservers(evento);
+            
+            // Lógica original de log que ahora podría ser movida al observador
+            AuditLogger.getInstancia().log(
+                String.valueOf(paquete.getIdPaquete()), 
+                estadoNuevo.name()
+            );
+        }
+    }
+    // ... (Otros métodos) ...
+}
+```
+
+-----
+
+### 3\. ✍️ Implementar el Observador (Auditoría)
+
+Crearemos una nueva clase específica que implementará la interfaz `Observer`. En un proyecto real, el `AuditLogger` podría ser este observador, pero para mayor claridad, crearemos un **`AuditoriaObserver`**.
+
+#### `AuditoriaObserver.java` (Implementando `Observer`)
+
+```java
+// Archivo: util/observer/AuditoriaObserver.java
+import util.observer.Observer;
+
+public class AuditoriaObserver implements Observer {
+    
+    private final AuditLogger logger;
+
+    public AuditoriaObserver(AuditLogger logger) {
+        this.logger = logger;
+    }
+
+    @Override
+    public void update(Object eventData) {
+        if (eventData instanceof String) {
+            String evento = (String) eventData;
+            
+            if (evento.startsWith("PAQUETE_ESTADO_CAMBIADO")) {
+                // Aquí podrías implementar una lógica más limpia de logging
+                
+                // Ejemplo: Analizar la cadena para obtener el ID y los estados
+                String[] partes = evento.split(":");
+                String idPaquete = partes[1];
+                String estados = partes[2];
+                
+                // Registro específico para el observador
+                System.out.println("🤖 OBSERVER LOG: Evento recibido y procesado para auditoría. Paquete ID: " + idPaquete + ", Cambios: " + estados);
+                
+                // Podrías llamar a tu AuditLogger aquí si quieres desacoplarlo completamente del Service
+                // logger.log("OBSERVER", "CAMBIO_ESTADO", "Paquete " + idPaquete + " actualizado.");
+            }
+        }
+    }
+}
+```
+
+-----
+
+### 4\. 🔗 Inicialización (Montaje del Sistema)
+
+Finalmente, debes suscribir al observador al sujeto en el punto de inicio de tu aplicación (la `main` o la clase que inicializa tus *Controllers* y *Services*).
+
+#### `RapidExpress.java` o `FabricaDeServicios.java`
+
+```java
+// Archivo: [Clase de Inicialización]
+
+// ... Inicialización de DAOs
+// ... Inicialización de Services
+// ...
+
+// 1. Crear el Sujeto
+PaqueteService paqueteService = new PaqueteService(paqueteDAO, ...);
+
+// 2. Crear el Observador, inyectando el logger (Singleton)
+AuditLogger logger = AuditLogger.getInstancia();
+AuditoriaObserver auditoriaObserver = new AuditoriaObserver(logger);
+
+// 3. Suscribir: Registrar el observador en el sujeto
+paqueteService.attach(auditoriaObserver);
+
+// 4. Los Controllers ahora usan el PaqueteService que tiene el observer suscrito
+// MenuPrincipalCLI.iniciar(new PaqueteController(paqueteService, ...));
+```
