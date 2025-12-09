@@ -55,27 +55,27 @@ INSERT INTO conductores (nombre_completo, identificacion, tipo_licencia, numero_
 ('Santiago León', 'CC1020', 'C2', '3020000000', 'DE_VACACIONES');
 
 
-INSERT INTO paquetes (tracking_code, descripcion, peso, dimensiones, direccion_origen, direccion_destino, remitente, destinatario, estado) VALUES
-('PK001', 'Ropa', 2.5, '30x20x10', 'Bogotá', 'Medellín', 'Ana Ruiz', 'Carlos Pérez', 'EN_BODEGA'),
-('PK002', 'Zapatos', 1.2, '25x20x12', 'Cali', 'Bogotá', 'Laura M', 'José G', 'ASIGNADO_A_RUTA'),
-('PK003', 'Electrónico', 3.0, '40x30x20', 'Barranquilla', 'Cali', 'Pedro L', 'Sergio H', 'EN_TRANSITO'),
-('PK004', 'Celular', 0.8, '15x10x5', 'Medellín', 'Bogotá', 'Sofía P', 'Luisa A', 'ENTREGADO'),
-('PK005', 'Libros', 4.0, '35x25x15', 'Bogotá', 'Bucaramanga', 'Andrés A', 'Miguel C', 'DEVUELTO'),
-('PK006', 'Documentos', 0.5, '20x15x3', 'Cali', 'Cartagena', 'Juan R', 'María L', 'EN_BODEGA'),
-('PK007', 'Computador', 5.0, '50x40x20', 'Medellín', 'Barranquilla', 'Diego V', 'Pablo R', 'EN_TRANSITO'),
-('PK008', 'Perfume', 0.3, '10x10x5', 'Bogotá', 'Santa Marta', 'Paola Q', 'Erika Z', 'EN_BODEGA'),
-('PK009', 'Tablet', 1.0, '25x20x5', 'Cali', 'Bogotá', 'Mauricio B', 'Daniel T', 'ASIGNADO_A_RUTA'),
-('PK010', 'Accesorios', 0.6, '15x10x8', 'Barranquilla', 'Cali', 'Yolanda M', 'Esteban P', 'ENTREGADO'),
-('PK011', 'Medicamentos', 1.5, '20x15x10', 'Cartagena', 'Bogotá', 'Clínica Norte', 'Farmacia Sur', 'EN_TRANSITO'),
-('PK012', 'Reloj', 0.2, '10x8x5', 'Medellín', 'Cali', 'Rolo S', 'Kevin Y', 'EN_BODEGA'),
-('PK013', 'Juguetes', 3.5, '40x30x20', 'Bogotá', 'Neiva', 'Juguetería ABC', 'Sandra F', 'DEVUELTO'),
-('PK014', 'Cámara', 0.9, '20x15x10', 'Bucaramanga', 'Bogotá', 'Marco T', 'Rafael O', 'ENTREGADO'),
-('PK015', 'Auriculares', 0.4, '15x10x5', 'Santa Marta', 'Medellín', 'Lina H', 'Brayan C', 'ASIGNADO_A_RUTA'),
-('PK016', 'Monitor', 4.5, '60x40x15', 'Bogotá', 'Cali', 'Carlos B', 'David H', 'EN_TRANSITO'),
-('PK017', 'Teclado', 0.7, '30x15x5', 'Cali', 'Bogotá', 'Sara W', 'Martín Q', 'EN_BODEGA'),
-('PK018', 'Bicicleta', 12.0, '100x70x20', 'Medellín', 'Cartagena', 'CicloStore', 'Pedro M', 'ASIGNADO_A_RUTA'),
-('PK019', 'Relojería', 0.4, '15x10x8', 'Pereira', 'Bogotá', 'Marta Z', 'Laura Y', 'EN_TRANSITO'),
-('PK020', 'Herramientas', 8.0, '50x30x20', 'Bogotá', 'Manizales', 'Ferretería JL', 'Juan D', 'EN_BODEGA');
+INSERT INTO paquetes (tracking_code, descripcion, peso, dimensiones, direccion_origen, direccion_destino, remitente, destinatario, estado, fecha_ingreso) VALUES
+('PK001', 'Ropa', 2.5, '30x20x10', 'Bogotá', 'Medellín', 'Ana Ruiz', 'Carlos Pérez', 'EN_BODEGA', '2025-12-01'),
+('PK002', 'Zapatos', 1.2, '25x20x12', 'Cali', 'Bogotá', 'Laura M', 'José G', 'ASIGNADO_A_RUTA', '2025-11-20'),
+('PK003', 'Electrónico', 3.0, '40x30x20', 'Barranquilla', 'Cali', 'Pedro L', 'Sergio H', 'EN_TRANSITO', '2025-11-25'),
+('PK004', 'Celular', 0.8, '15x10x5', 'Medellín', 'Bogotá', 'Sofía P', 'Luisa A', 'ENTREGADO', '2025-12-07'),
+('PK005', 'Libros', 4.0, '35x25x15', 'Bogotá', 'Bucaramanga', 'Andrés A', 'Miguel C', 'DEVUELTO', '2025-12-06'),
+('PK006', 'Documentos', 0.5, '20x15x3', 'Cali', 'Cartagena', 'Juan R', 'María L', 'EN_BODEGA', '2025-12-08'),
+('PK007', 'Computador', 5.0, '50x40x20', 'Medellín', 'Barranquilla', 'Diego V', 'Pablo R', 'EN_TRANSITO', '2025-12-05'),
+('PK008', 'Perfume', 0.3, '10x10x5', 'Bogotá', 'Santa Marta', 'Paola Q', 'Erika Z', 'EN_BODEGA', '2025-12-03'),
+('PK009', 'Tablet', 1.0, '25x20x5', 'Cali', 'Bogotá', 'Mauricio B', 'Daniel T', 'ASIGNADO_A_RUTA', '2025-12-06'),
+('PK010', 'Accesorios', 0.6, '15x10x8', 'Barranquilla', 'Cali', 'Yolanda M', 'Esteban P', 'ENTREGADO', '2025-12-07'),
+('PK011', 'Medicamentos', 1.5, '20x15x10', 'Cartagena', 'Bogotá', 'Clínica Norte', 'Farmacia Sur', 'EN_TRANSITO', '2025-12-05'),
+('PK012', 'Reloj', 0.2, '10x8x5', 'Medellín', 'Cali', 'Rolo S', 'Kevin Y', 'EN_BODEGA', '2025-12-02'),
+('PK013', 'Juguetes', 3.5, '40x30x20', 'Bogotá', 'Neiva', 'Juguetería ABC', 'Sandra F', 'DEVUELTO', '2025-11-30'),
+('PK014', 'Cámara', 0.9, '20x15x10', 'Bucaramanga', 'Bogotá', 'Marco T', 'Rafael O', 'ENTREGADO', '2025-12-07'),
+('PK015', 'Auriculares', 0.4, '15x10x5', 'Santa Marta', 'Medellín', 'Lina H', 'Brayan C', 'ASIGNADO_A_RUTA', '2025-12-06'),
+('PK016', 'Monitor', 4.5, '60x40x15', 'Bogotá', 'Cali', 'Carlos B', 'David H', 'EN_TRANSITO', '2025-12-05'),
+('PK017', 'Teclado', 0.7, '30x15x5', 'Cali', 'Bogotá', 'Sara W', 'Martín Q', 'EN_BODEGA', '2025-12-09'),
+('PK018', 'Bicicleta', 12.0, '100x70x20', 'Medellín', 'Cartagena', 'CicloStore', 'Pedro M', 'ASIGNADO_A_RUTA', '2025-12-06'),
+('PK019', 'Relojería', 0.4, '15x10x8', 'Pereira', 'Bogotá', 'Marta Z', 'Laura Y', 'EN_TRANSITO', '2025-12-07'),
+('PK020', 'Herramientas', 8.0, '50x30x20', 'Bogotá', 'Manizales', 'Ferretería JL', 'Juan D', 'EN_BODEGA', '2025-12-01');
 
 
 INSERT INTO rutas (fecha, id_vehiculo, id_conductor, total_peso_kg, estado) VALUES

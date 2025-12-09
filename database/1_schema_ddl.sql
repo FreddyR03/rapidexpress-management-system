@@ -41,7 +41,8 @@ CREATE TABLE paquetes (
     direccion_destino VARCHAR(255) NOT NULL,
     remitente VARCHAR(100) NOT NULL,
     destinatario VARCHAR(100) NOT NULL,
-    estado ENUM('EN_BODEGA', 'ASIGNADO_A_RUTA', 'EN_TRANSITO', 'ENTREGADO', 'DEVUELTO') NOT NULL
+    estado ENUM('EN_BODEGA', 'ASIGNADO_A_RUTA', 'EN_TRANSITO', 'ENTREGADO', 'DEVUELTO') NOT NULL,
+    fecha_ingreso DATE NOT NULL
 );
 
 CREATE TABLE rutas (

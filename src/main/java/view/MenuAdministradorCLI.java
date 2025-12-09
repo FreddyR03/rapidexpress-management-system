@@ -13,9 +13,6 @@ import model.Ruta;
 import util.CLIUtils;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import model.Paquete;
 import service.ejercicio2.ServicioClientes;
 import view.ejercicio3.CrearRutasCli;
@@ -210,8 +207,10 @@ public class MenuAdministradorCLI {
             System.out.println("1. Crear Paquete");
             System.out.println("2. Listar Paquetes");
             System.out.println("3. Listar por Estado");
+            // EJERCICIO 5
+            System.out.println("4. Actualizar paquete");
             // EJERCICIO 4
-            System.out.println("4. Listar paquetes olvidados");
+            System.out.println("5. Listar paquetes olvidados");
             System.out.println("0. Volver");
             opcion = CLIUtils.leerInt("Seleccione una opción");
 
@@ -235,7 +234,43 @@ public class MenuAdministradorCLI {
                     EstadoPaquete estado = EstadoPaquete.valueOf(estadoStr);
                     paqueteController.listarPaquetesPorEstado(estado);
                 }
-                case 4 -> paqueteController.listarPaquetesOlvidados();
+                // EJERCICIO 5
+                case 4 -> {
+                    paqueteController.listarPaquetes(); // Opcional: mostrar la lista primero
+                int id = CLIUtils.leerInt("Ingrese ID del paquete a actualizar");
+
+                try {
+                    // 1. Obtener el paquete existente
+                    Paquete paqueteAActualizar = paqueteController.obtenerPaquetePorId(id);
+
+                    if (paqueteAActualizar != null) {
+                        System.out.println("Estado actual: " + paqueteAActualizar.getEstado().name());
+                        
+                        // 2. Pedir el nuevo estado
+                        String estadoStr = CLIUtils.leerString("Ingrese nuevo estado (EN_BODEGA, ASIGNADO_A_RUTA, EN_TRANSITO, ENTREGADO, DEVUELTO)").toUpperCase();
+                        EstadoPaquete nuevoEstado = EstadoPaquete.valueOf(estadoStr);
+
+                        // 3. Actualizar el objeto Paquete con el nuevo estado
+                        paqueteAActualizar.setEstado(nuevoEstado);
+                        
+                        // 4. Llamar al Controller (que llama al Service y éste al AuditLogger)
+                        paqueteController.actualizarPaquete(paqueteAActualizar); 
+                        
+                        System.out.println("Paquete ID " + id + " actualizado a estado: " + nuevoEstado.name());
+                        
+                        // 5. Registrar la acción del Administrador en el log general (opcional, ya que el Service lo hace)
+                        auditoriaController.registrarAccion(usuarioActual.getUsername(), "ACTUALIZAR_ESTADO_PAQUETE", "ID: " + id + ", Nuevo Estado: " + nuevoEstado.name());
+
+                    } else {
+                        System.out.println("Paquete con ID " + id + " no encontrado.");
+                    }
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Error: El estado de paquete ingresado no es válido.");
+                } catch (Exception e) {
+                    System.out.println("Error desconocido al actualizar paquete: " + e.getMessage());
+                }
+                }
+                case 5 -> paqueteController.listarPaquetesOlvidados();
             }
         } while (opcion != 0);
     }

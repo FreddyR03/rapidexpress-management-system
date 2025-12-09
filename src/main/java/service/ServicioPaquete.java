@@ -5,6 +5,7 @@ import model.Paquete;
 import model.enums.EstadoPaquete;
 
 import java.util.List;
+import model.ejercicio5.AuditLogger;
 
 public class ServicioPaquete {
 
@@ -19,7 +20,23 @@ public class ServicioPaquete {
     }
 
     public void actualizarPaquete(Paquete paquete) throws Exception {
+        // 1. Obtener el estado ACTUAL (antes de la actualización)
+        Paquete paqueteAnterior = paqueteDAO.obtenerPaquetePorId(paquete.getIdPaquete());
+        EstadoPaquete estadoAnterior = paqueteAnterior.getEstado();
+
+        // 2. Ejecutar la actualización en la base de datos (Llama al DAO)
         paqueteDAO.actualizarPaquete(paquete);
+
+        // 3. Obtener el estado NUEVO después de la actualización
+        EstadoPaquete estadoNuevo = paquete.getEstado();
+
+        // 4. CLAVE: Verificar y llamar al logger
+        if (!estadoNuevo.equals(estadoAnterior)) {
+            AuditLogger.getInstancia().log( 
+                String.valueOf(paquete.getIdPaquete()), 
+                estadoNuevo.name()                      
+            );
+        }
     }
 
     public void eliminarPaquete(int idPaquete) throws Exception {
