@@ -13,7 +13,7 @@ public class VehiculoDAOImpl implements VehiculoDAO {
 
     @Override
     public void crearVehiculo(Vehiculo vehiculo) throws Exception {
-        String sql = "INSERT INTO vehiculos (placa, marca, modelo, anio_fabricacion, capacidad_kg, estado) VALUES (?,?,?,?,?,?)";
+        String sql = "INSERT INTO vehiculos (placa, marca, modelo, anio_fabricacion, capacidad_kg, estado, tipoVehiculo) VALUES (?,?,?,?,?,?,?)";
         try (Connection conn = ConexionBD.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, vehiculo.getPlaca());
@@ -22,6 +22,7 @@ public class VehiculoDAOImpl implements VehiculoDAO {
             ps.setInt(4, vehiculo.getAnioFabricacion());
             ps.setDouble(5, vehiculo.getCapacidadKg());
             ps.setString(6, vehiculo.getEstado().name());
+            ps.setString(7, vehiculo.getTipoVehiculo());
             ps.executeUpdate();
 
             try (ResultSet rs = ps.getGeneratedKeys()) {
@@ -34,7 +35,7 @@ public class VehiculoDAOImpl implements VehiculoDAO {
 
     @Override
     public void actualizarVehiculo(Vehiculo vehiculo) throws Exception {
-        String sql = "UPDATE vehiculos SET placa=?, marca=?, modelo=?, anio_fabricacion=?, capacidad_kg=?, estado=? WHERE id_vehiculo=?";
+        String sql = "UPDATE vehiculos SET placa=?, marca=?, modelo=?, anio_fabricacion=?, capacidad_kg=?, estado=?, tipoVehiculo=? WHERE id_vehiculo=?";
         try (Connection conn = ConexionBD.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, vehiculo.getPlaca());
@@ -43,7 +44,8 @@ public class VehiculoDAOImpl implements VehiculoDAO {
             ps.setInt(4, vehiculo.getAnioFabricacion());
             ps.setDouble(5, vehiculo.getCapacidadKg());
             ps.setString(6, vehiculo.getEstado().name());
-            ps.setInt(7, vehiculo.getIdVehiculo());
+            ps.setString(7, vehiculo.getTipoVehiculo());
+            ps.setInt(8, vehiculo.getIdVehiculo());
             ps.executeUpdate();
         }
     }
@@ -95,7 +97,8 @@ public class VehiculoDAOImpl implements VehiculoDAO {
                 rs.getString("modelo"),
                 rs.getInt("anio_fabricacion"),
                 rs.getDouble("capacidad_kg"),
-                EstadoVehiculo.valueOf(rs.getString("estado"))
+                EstadoVehiculo.valueOf(rs.getString("estado")),
+                rs.getString("tipoVehiculo")
         );
     }
 }

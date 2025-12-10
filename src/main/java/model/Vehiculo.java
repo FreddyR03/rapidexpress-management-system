@@ -10,8 +10,9 @@ public class Vehiculo {
     private int anioFabricacion;
     private double capacidadKg;
     private EstadoVehiculo estado;
+    private String tipoVehiculo;
 
-    public Vehiculo(int idVehiculo, String placa, String marca, String modelo, int anioFabricacion, double capacidadKg, EstadoVehiculo estado) {
+    public Vehiculo(int idVehiculo, String placa, String marca, String modelo, int anioFabricacion, double capacidadKg, EstadoVehiculo estado, String tipoVehiculo) {
         this.idVehiculo = idVehiculo;
         this.placa = placa;
         this.marca = marca;
@@ -19,15 +20,17 @@ public class Vehiculo {
         this.anioFabricacion = anioFabricacion;
         this.capacidadKg = capacidadKg;
         this.estado = estado;
+        this.tipoVehiculo = tipoVehiculo;
     }
     
-    public Vehiculo(String placa, String marca, String modelo, int anioFabricacion, double capacidadKg, EstadoVehiculo estado) {
+    public Vehiculo(String placa, String marca, String modelo, int anioFabricacion, double capacidadKg, EstadoVehiculo estado, String tipoVehiculo) {
         this.placa = placa;
         this.marca = marca;
         this.modelo = modelo;
         this.anioFabricacion = anioFabricacion;
         this.capacidadKg = capacidadKg;
         this.estado = estado;
+        this.tipoVehiculo = tipoVehiculo;
     }
 
     public int getIdVehiculo() { return idVehiculo; }
@@ -37,6 +40,7 @@ public class Vehiculo {
     public int getAnioFabricacion() { return anioFabricacion; }
     public double getCapacidadKg() { return capacidadKg; }
     public EstadoVehiculo getEstado() { return estado; }
+    public String getTipoVehiculo(){ return tipoVehiculo; }
 
     public void setIdVehiculo(int idVehiculo) { this.idVehiculo = idVehiculo; }
     public void setPlaca(String placa) { this.placa = placa; }
@@ -45,6 +49,7 @@ public class Vehiculo {
     public void setAnioFabricacion(int anioFabricacion) { this.anioFabricacion = anioFabricacion; }
     public void setCapacidadKg(double capacidadKg) { this.capacidadKg = capacidadKg; }
     public void setEstado(EstadoVehiculo estado) { this.estado = estado; }
+    public void setTipoVehiculo(String tipoVehiculo) { this.tipoVehiculo = tipoVehiculo;}
     
     @Override
     public String toString() {
@@ -56,6 +61,7 @@ public class Vehiculo {
                ", anioFabricacion=" + anioFabricacion +
                ", capacidadKg=" + capacidadKg +
                ", estado=" + estado +
+               ", tipo de vehiculo=" + tipoVehiculo +
                '}';
     }
 }

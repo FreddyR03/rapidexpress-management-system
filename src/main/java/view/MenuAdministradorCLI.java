@@ -122,10 +122,11 @@ public class MenuAdministradorCLI {
                     String marca = CLIUtils.leerString("Marca");
                     String modelo = CLIUtils.leerString("Modelo");
                     int anio = CLIUtils.leerInt("Año de fabricación");
+                    String tipoVehiculo = CLIUtils.leerString("Ingrese el tipo de vehiculo (motocicleta, camion, carro");
                     double capacidad = CLIUtils.leerDouble("Capacidad (Kg)");
                     String estadoStr = CLIUtils.leerString("Estado (DISPONIBLE, EN_RUTA, EN_MANTENIMIENTO)").toUpperCase();
                     EstadoVehiculo estado = EstadoVehiculo.valueOf(estadoStr);
-                    vehiculoController.crearVehiculo(placa, marca, modelo, anio, capacidad, estado);
+                    vehiculoController.crearVehiculo(placa, marca, modelo, anio, capacidad, estado, tipoVehiculo);
                     auditoriaController.registrarAccion(usuarioActual.getUsername(), "CREAR_VEHICULO", "Placa: " + placa);
                 }
                 case 2 -> vehiculoController.listarVehiculos();
@@ -136,10 +137,11 @@ public class MenuAdministradorCLI {
                     String marca = CLIUtils.leerString("Nueva marca");
                     String modelo = CLIUtils.leerString("Nuevo modelo");
                     int anio = CLIUtils.leerInt("Nuevo año");
-                    double capacidad = CLIUtils.leerDouble("Nueva capacidad");
+                    String tipoVehiculo = CLIUtils.leerString("Nuevo tipo de vehiculo: (motocicleta, camion, carro)");
+                    double capacidad = CLIUtils.leerDouble("Nueva capacidad (kg)");
                     String estadoStr = CLIUtils.leerString("Nuevo estado (DISPONIBLE, EN_RUTA, EN_MANTENIMIENTO)").toUpperCase();
                     EstadoVehiculo estado = EstadoVehiculo.valueOf(estadoStr);
-                    vehiculoController.actualizarVehiculo(new Vehiculo(id, placa, marca, modelo, anio, capacidad, estado));
+                    vehiculoController.actualizarVehiculo(new Vehiculo(id, placa, marca, modelo, anio, capacidad, estado, tipoVehiculo));
                     auditoriaController.registrarAccion(usuarioActual.getUsername(), "ACTUALIZAR_VEHICULO", "ID: " + id);
                 }
             }
