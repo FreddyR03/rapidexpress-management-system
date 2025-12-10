@@ -19,7 +19,8 @@ CREATE TABLE vehiculos (
     modelo VARCHAR(50) NOT NULL,
     anio_fabricacion INT NOT NULL,
     capacidad_kg DOUBLE NOT NULL,
-    estado ENUM('DISPONIBLE', 'EN_RUTA', 'EN_MANTENIMIENTO') NOT NULL
+    estado ENUM('DISPONIBLE', 'EN_RUTA', 'EN_MANTENIMIENTO') NOT NULL,
+    tipoVehiculo VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE conductores (

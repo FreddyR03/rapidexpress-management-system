@@ -9,27 +9,24 @@ INSERT INTO usuarios (username, password, rol) VALUES
 ('trabajador', 'trab123', 'TRABAJADOR');
 
 
-INSERT INTO vehiculos (placa, marca, modelo, anio_fabricacion, capacidad_kg, estado) VALUES
-('ABC123', 'Toyota', 'Hilux', 2018, 1500, 'DISPONIBLE'),
-('DEF456', 'Nissan', 'Frontier', 2019, 1400, 'EN_RUTA'),
-('GHI789', 'Chevrolet', 'D-Max', 2017, 1300, 'DISPONIBLE'),
-('JKL321', 'Ford', 'Ranger', 2020, 1600, 'EN_MANTENIMIENTO'),
-('MNO654', 'Mazda', 'BT-50', 2021, 1500, 'DISPONIBLE'),
-('PQR987', 'Isuzu', 'KB', 2016, 1200, 'EN_RUTA'),
-('STU147', 'Hyundai', 'H100', 2015, 1000, 'DISPONIBLE'),
-('VWX258', 'Kia', 'K2700', 2020, 1100, 'DISPONIBLE'),
-('YZA369', 'Renault', 'Master', 2022, 2000, 'DISPONIBLE'),
-('BCD741', 'Peugeot', 'Boxer', 2019, 1900, 'EN_RUTA'),
-('EFG852', 'Citroen', 'Jumper', 2018, 1800, 'DISPONIBLE'),
-('HIJ963', 'Volkswagen', 'Amarok', 2021, 1700, 'DISPONIBLE'),
-('KLM159', 'Mercedes', 'Sprinter', 2017, 2200, 'EN_MANTENIMIENTO'),
-('NOP357', 'Fiat', 'Ducato', 2016, 1800, 'DISPONIBLE'),
-('QRS456', 'Chevrolet', 'NHR', 2020, 3000, 'DISPONIBLE'),
-('TUV753', 'Hino', '300', 2019, 3500, 'DISPONIBLE'),
-('WXY951', 'JAC', 'X200', 2018, 1200, 'EN_RUTA'),
-('ZAB258', 'Dongfeng', 'DFSK', 2021, 1000, 'DISPONIBLE'),
-('CDE147', 'Kia', 'Sportage', 2015, 900, 'DISPONIBLE'),
-('FGH369', 'Toyota', 'Land Cruiser', 2014, 800, 'EN_RUTA');
+INSERT INTO vehiculos (placa, marca, modelo, anio_fabricacion, capacidad_kg, estado, tipoVehiculo) VALUES
+('JKL321', 'Ford', 'Ranger', 2020, 1600, 'EN_MANTENIMIENTO', 'Motocicleta'),
+('MNO654', 'Mazda', 'BT-50', 2021, 1500, 'DISPONIBLE', 'Camion'),
+('PQR987', 'Isuzu', 'KB', 2016, 1200, 'EN_RUTA', 'Motocicleta'),
+('STU147', 'Hyundai', 'H100', 2015, 1000, 'DISPONIBLE', 'Camion'),
+('VWX258', 'Kia', 'K2700', 2020, 1100, 'DISPONIBLE', 'Motocicleta'),
+('YZA369', 'Renault', 'Master', 2022, 2000, 'DISPONIBLE', 'Camion'),
+('BCD741', 'Peugeot', 'Boxer', 2019, 1900, 'EN_RUTA', 'Camion'),
+('EFG852', 'Citroen', 'Jumper', 2018, 1800, 'DISPONIBLE', 'Camion'),
+('HIJ963', 'Volkswagen', 'Amarok', 2021, 1700, 'DISPONIBLE', 'Camion'),
+('KLM159', 'Mercedes', 'Sprinter', 2017, 2200, 'EN_MANTENIMIENTO', 'Camion'),
+('NOP357', 'Fiat', 'Ducato', 2016, 1800, 'DISPONIBLE', 'Camion'),
+('QRS456', 'Chevrolet', 'NHR', 2020, 3000, 'DISPONIBLE', 'Carro'),
+('TUV753', 'Hino', '300', 2019, 3500, 'DISPONIBLE', 'Carro'),
+('WXY951', 'JAC', 'X200', 2018, 1200, 'EN_RUTA', 'Carro'),
+('ZAB258', 'Dongfeng', 'DFSK', 2021, 1000, 'DISPONIBLE', 'Carro'),
+('CDE147', 'Kia', 'Sportage', 2015, 900, 'DISPONIBLE', 'Carro'),
+('FGH369', 'Toyota', 'Land Cruiser', 2014, 800, 'EN_RUTA', 'Carro');
 
 
 INSERT INTO conductores (nombre_completo, identificacion, tipo_licencia, numero_contacto, estado) VALUES
@@ -102,26 +99,26 @@ INSERT INTO rutas (fecha, id_vehiculo, id_conductor, total_peso_kg, estado) VALU
 
 
 INSERT INTO ruta_envio (id_ruta, id_paquete) VALUES
-(1, 1),
-(1, 2),
-(2, 3),
-(3, 4),
-(3, 5),
-(4, 6),
-(5, 7),
-(6, 8),
-(6, 9),
-(7, 10),
-(8, 11),
-(9, 12),
-(10, 13),
-(11, 14),
-(12, 15),
-(13, 16),
-(14, 17),
-(15, 18),
-(16, 19),
-(17, 20);
+(21, 1),
+(22, 2),
+(23, 3),
+(24, 4),
+(25, 5),
+(26, 6),
+(27, 7),
+(28, 8),
+(29, 9),
+(30, 10),
+(31, 11),
+(32, 12),
+(33, 13),
+(34, 14),
+(35, 15),
+(36, 16),
+(37, 17),
+(38, 18),
+(39, 19),
+(40, 20);
 
 
 INSERT INTO mantenimientos (id_vehiculo, fecha, descripcion, tipo) VALUES
